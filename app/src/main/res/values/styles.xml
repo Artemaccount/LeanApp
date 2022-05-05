@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MenuButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="background">?attr/colorControlNormal</item>
+        <item name="iconTint">?attr/colorControlNormal</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="LikeButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">@color/like_tint</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="minWidth">48dp</item>
+        <item name="minHeight">48dp</item>
+    </style>
+</resources>

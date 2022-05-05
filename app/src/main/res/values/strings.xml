@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LeanApp</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="chooser_share_post">Share it!</string>
+</resources>
