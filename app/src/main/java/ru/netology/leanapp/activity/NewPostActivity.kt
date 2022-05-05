@@ -13,7 +13,7 @@ import ru.netology.leanapp.databinding.ActivityNewPostBinding
 import ru.netology.leanapp.dto.Post
 
 class NewPostActivity : AppCompatActivity() {
-    var post: Post? = null
+    private lateinit var post: Post
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
@@ -21,11 +21,11 @@ class NewPostActivity : AppCompatActivity() {
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        post = intent.getParcelableExtra(POST_KEY)
+        post = intent.getParcelableExtra(POST_KEY)!!
 
-        if (post?.id != 0L) {
-            binding.editField.setText(post?.text)
-            binding.authorField.setText(post?.author)
+        if (post.id != 0L) {
+            binding.editField.setText(post.text)
+            binding.authorField.setText(post.author)
             binding.editField.requestFocus()
         }
 
@@ -42,12 +42,10 @@ class NewPostActivity : AppCompatActivity() {
         } else {
             val newPostContent = text.toString()
             var newPostAuthor = author.toString()
-            if (newPostAuthor.isNullOrEmpty()) {
+            if (newPostAuthor.isEmpty()) {
                 newPostAuthor = "Unknown author"
             }
-            val newPost =
-                if (post?.id != 0L) post?.copy(text = newPostContent, author = newPostAuthor)
-                else Post(0L, newPostAuthor, newPostContent, 0)
+            val newPost = post.copy(text = newPostContent, author = newPostAuthor)
             intent.putExtra(NEW_POST_KEY, newPost)
             setResult(RESULT_OK, intent)
         }
@@ -66,8 +64,7 @@ class NewPostActivity : AppCompatActivity() {
     }
 
     private companion object {
-        const val POST_KEY = "oldContent"
+        const val POST_KEY = "oldPost"
         const val NEW_POST_KEY = "newPost"
-        const val AUTHOR_KEY = "authorKey"
     }
 }

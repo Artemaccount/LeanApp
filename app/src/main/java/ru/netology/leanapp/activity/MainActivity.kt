@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
 
         val postLauncher = registerForActivityResult(
             NewPostActivity.ResultContract
-        ) { newPostContent ->
-            newPostContent ?: return@registerForActivityResult
-            viewModel.onSave(newPostContent)
+        ) { newPost ->
+            newPost ?: return@registerForActivityResult
+            viewModel.onSave(newPost)
         }
 
-        viewModel.editPostScreenEvent.observe(this) { postcontent ->
-            postLauncher.launch(postcontent)
+        viewModel.editPostScreenEvent.observe(this) { post ->
+            postLauncher.launch(post)
         }
 
         viewModel.newPostScreenEvent.observe(this) {
