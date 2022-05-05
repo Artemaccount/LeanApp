@@ -18,19 +18,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //region binding/adapter
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val viewModel: PostViewModel by viewModels()
-
         val adapter = PostsAdapter(viewModel)
-
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-
-
+        //endregion
+        //region shareEvent
         viewModel.shareEvent.observe(this) { postContent ->
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -39,19 +37,22 @@ class MainActivity : AppCompatActivity() {
             }
             val shareIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
             startActivity(shareIntent)
-
         }
+        //endregion
 
-
-        val newPostLauncher = registerForActivityResult(
+        val postLauncher = registerForActivityResult(
             NewPostActivity.ResultContract
         ) { newPostContent ->
             newPostContent ?: return@registerForActivityResult
             viewModel.onSave(newPostContent)
         }
 
+        viewModel.editPostScreenEvent.observe(this) { postcontent ->
+            postLauncher.launch(postcontent)
+        }
+
         viewModel.newPostScreenEvent.observe(this) {
-            newPostLauncher.launch()
+            postLauncher.launch(viewModel.emptyPost())
         }
 
         binding.fab.setOnClickListener { viewModel.onAdd() }

@@ -1,12 +1,11 @@
 package ru.netology.leanapp.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.leanapp.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
 
-    private var nextId = 3L
+    private var nextId = 7L
 
     override val data: MutableLiveData<List<Post>>
 
@@ -14,13 +13,33 @@ class PostRepositoryInMemoryImpl : PostRepository {
         val posts = listOf(
             Post(
                 id = 1L,
-                author = "Владимир Фёдорович",
-                text = "Мы пока этим не занимаемся",
+                author = "123",
+                text = "Test Text",
                 likes = 123123
             ), Post(
                 id = 2L,
-                author = "Максим Гришко",
-                text = "Мы не обманываем - мы планируем",
+                author = "First author",
+                text = "Test Text222",
+                likes = 123123
+            ), Post(
+                id = 3L,
+                author = "Second author",
+                text = "Test Text333",
+                likes = 123123
+            ), Post(
+                id = 4L,
+                author = "Third author",
+                text = "Test Text1412412",
+                likes = 123123
+            ), Post(
+                id = 5L,
+                author = "4th author",
+                text = "1412",
+                likes = 123123
+            ), Post(
+                id = 6L,
+                author = "5th author",
+                text = "632325",
                 likes = 123123
             )
         )
@@ -52,7 +71,6 @@ class PostRepositoryInMemoryImpl : PostRepository {
         } else {
             update(post)
         }
-
     }
 
     private fun insert(post: Post) {
@@ -62,7 +80,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     private fun update(post: Post) {
         data.value = posts.map {
             if (it.id == post.id) it.copy(
-                text = post.text
+                text = post.text, author = post.author
             ) else it
         }
     }
